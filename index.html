@@ -215,10 +215,11 @@
   
 </head>
 <body>
-<audio autoplay loop>
+<audio id="musica" loop>
   <source src="la_magia.mp3" type="audio/mpeg">
   Tu navegador no soporta audio HTML5.
 </audio>
+
       
       
   <!-- Música de fondo -->
@@ -234,7 +235,7 @@
     <img src="f3.jpeg" alt="Nosotros 3">
   </div>
 
-  <button id="myBtn">Haz clic aqui mi vida</button>
+<button id="myBtn">Haz clic aquí mi vida</button>
 
   <!-- El Modal -->
   <div id="myModal" class="modal">
@@ -249,54 +250,64 @@
     </div>
   </div>
 
-  <script>
-    // Obtén el modal
-    var modal = document.getElementById("myModal");
+<script>
+  // Obtén el modal
+  var modal = document.getElementById("myModal");
 
-    // Obtén el botón que abre el modal
-    var btn = document.getElementById("myBtn");
+  // Obtén el botón que abre el modal
+  var btn = document.getElementById("myBtn");
 
-    // Obtén el <span> que cierra el modal
-    var span = document.getElementsByClassName("close")[0];
+  // Obtén el <span> que cierra el modal
+  var span = document.getElementsByClassName("close")[0];
 
-    // Cuando el usuario hace clic en el botón, se abre el modal
-    btn.onclick = function() {
-      modal.style.display = "block";
+  // Obtén el elemento <audio>
+  var audio = document.getElementById("musica");
+
+  // Cuando el usuario hace clic en el botón, se abre el modal y se reproduce la música
+  btn.onclick = function() {
+    modal.style.display = "block";
+    if (audio) {
+      audio.play().catch((e) => {
+        console.log("Reproducción bloqueada por el navegador:", e);
+      });
     }
+  }
 
-    // Cuando el usuario hace clic en <span> (x), se cierra el modal
-    span.onclick = function() {
+  // Cuando el usuario hace clic en <span> (x), se cierra el modal
+  span.onclick = function() {
+    modal.style.display = "none";
+  }
+
+  // Cuando el usuario hace clic fuera del modal, también lo cierra
+  window.onclick = function(event) {
+    if (event.target == modal) {
       modal.style.display = "none";
     }
+  }
 
-    // Cuando el usuario hace clic fuera del modal, también lo cierra
-    window.onclick = function(event) {
-      if (event.target == modal) {
-        modal.style.display = "none";
-      }
+  // Cuenta regresiva hasta el 20 de agosto
+  var countdownDate = new Date("Aug 20, 2025 00:00:00").getTime();
+
+  var x = setInterval(function() {
+    var now = new Date().getTime();
+    var distance = countdownDate - now;
+
+    var days = Math.floor(distance / (1000 * 60 * 60 * 24));
+    var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+    var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+    var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+    document.getElementById("countdown").innerHTML = 
+      "Faltan " + days + " días, " + hours + " horas, " + minutes + " minutos, " + seconds + " segundos.";
+
+    if (distance < 0) {
+      clearInterval(x);
+      document.getElementById("countdown").innerHTML = "";
+      document.getElementById("finalMessage").innerHTML = "Para tenerte en mis brazos 💖";
     }
+  }, 1000);
+</script>
 
-    // Cuenta regresiva hasta el 20 de agosto
-    var countdownDate = new Date("Aug 20, 2025 00:00:00").getTime();
-
-    var x = setInterval(function() {
-      var now = new Date().getTime();
-      var distance = countdownDate - now;
-
-      var days = Math.floor(distance / (1000 * 60 * 60 * 24));
-      var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-      var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-      var seconds = Math.floor((distance % (1000 * 60)) / 1000);
-
-      document.getElementById("countdown").innerHTML = "Faltan " + days + " días, " + hours + " horas, " + minutes + " minutos, " + seconds + " segundos.";
-
-      if (distance < 0) {
-        clearInterval(x);
-        document.getElementById("countdown").innerHTML = "";
-        document.getElementById("finalMessage").innerHTML = "Para tenerte en mis brazos 💖";
-      }
-    }, 1000);
-  </script>
 <script>
     window.addEventListener("DOMContentLoaded", () => {
       const music = document.getElementById("background-music");
